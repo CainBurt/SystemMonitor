@@ -1,42 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Monitor</title>
-</head>
-<body>
-  <h1>System Monitor</h1>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>System Monitor</title>
+    </head>
+    <body>
 
-  <p>Platform: <span id="platform">Loading...</span></p>
-  <p>Architecture: <span id="architecture">Loading...</span></p>
-  <p>CPU cores: <span id="cpu-count">Loading...</span></p>
-  <p>Total memory: <span id="total-memory">Loading...</span></p>
-  <p>Free memory: <span id="free-memory">Loading...</span></p>
+    <h1>System Monitor</h1>
 
-  <pre id="process-info">Loading process information...</pre>
+    <p>Platform: <span id="platform">Loading...</span></p>
+    <p>Architecture: <span id="architecture">Loading...</span></p>
+    <p>CPU cores: <span id="cpu-count">Loading...</span></p>
+    <p>Total memory: <span id="total-memory">Loading...</span></p>
+    <p>Free memory: <span id="free-memory">Loading...</span></p>
 
-  <script>
-    async function loadSystemInfo() {
-      const info = await window.desktop.getSystemInfo();
+        <section>
+            <h2>Electron Processes</h2>
 
-      document.getElementById('platform').textContent = info.platform;
-      document.getElementById('architecture').textContent = info.architecture;
-      document.getElementById('cpu-count').textContent = info.cpuCount;
-      document.getElementById('total-memory').textContent = info.totalMemory;
-      document.getElementById('free-memory').textContent = info.freeMemory;
-    }
+            <table>
+                <thead>
+                <tr>
+                    <th>PID</th>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Memory</th>
+                    <th>Sandboxed</th>
+                </tr>
+                </thead>
 
-    loadSystemInfo();
+                <tbody id="process-table-body">
+                <tr>
+                    <td colspan="5">Loading...</td>
+                </tr>
+                </tbody>
+            </table>
 
-    async function loadProcessInfo() {
-    const info = await window.desktop.getProcessInfo();
-
-    document.getElementById('process-info').textContent =
-        JSON.stringify(info, null, 2);
-    }
-
-    loadProcessInfo();
-  </script>
-</body>
+            <p>
+                Collected:
+                <span id="process-timestamp">Loading...</span>
+            </p>
+        </section>
+        <script src="./renderer.js"></script>
+    </body>
 </html>
