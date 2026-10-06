@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const path = require('path');
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -6,8 +7,8 @@ function createWindow() {
         height: 600,
     });
 
-     mainWindow.loadURL(
-        'data:text/html,<h1>System Monitor</h1><p>Running...</p>'
+     mainWindow.loadFile(
+        path.join(__dirname, '../renderer/index.html')
     );
 }
 
