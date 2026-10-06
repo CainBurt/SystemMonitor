@@ -12,6 +12,30 @@ ipcMain.handle('system:get-info', () => {
   };
 });
 
+ipcMain.handle('process:get-info', () => {
+  const processes = app.getAppMetrics();
+
+  return {
+    timestamp: new Date().toISOString(),
+
+    mainProcess: {
+      pid: process.pid,
+      memory: process.memoryUsage(),
+    },
+
+    electronProcesses: processes.map((processInfo) => ({
+      pid: processInfo.pid,
+      type: processInfo.type,
+      name: processInfo.name,
+      serviceName: processInfo.serviceName,
+      memory: processInfo.memory,
+      cpu: processInfo.cpu,
+      sandboxed: processInfo.sandboxed,
+      integrityLevel: processInfo.integrityLevel,
+    })),
+  };
+});
+
 function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 800,

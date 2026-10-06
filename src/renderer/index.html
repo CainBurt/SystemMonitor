@@ -14,6 +14,8 @@
   <p>Total memory: <span id="total-memory">Loading...</span></p>
   <p>Free memory: <span id="free-memory">Loading...</span></p>
 
+  <pre id="process-info">Loading process information...</pre>
+
   <script>
     async function loadSystemInfo() {
       const info = await window.desktop.getSystemInfo();
@@ -26,6 +28,15 @@
     }
 
     loadSystemInfo();
+
+    async function loadProcessInfo() {
+    const info = await window.desktop.getProcessInfo();
+
+    document.getElementById('process-info').textContent =
+        JSON.stringify(info, null, 2);
+    }
+
+    loadProcessInfo();
   </script>
 </body>
 </html>
