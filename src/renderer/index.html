@@ -6,6 +6,18 @@
     <title>System Monitor</title>
 </head>
 <body>
-    <div>Renderer</div>
+    <h1>System Monitor </h1>
+    <p>Renderer process is running.</p>
+
+    <p>
+        Platform:
+        <span id="platform">Loading...</span>
+    </p>
+
+    <script>
+        const platformElement = document.getElementById('platform');
+
+        platformElement.textContent = window.desktop.getPlatform();
+    </script>
 </body>
 </html>
