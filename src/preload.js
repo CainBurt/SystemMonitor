@@ -1,5 +1,5 @@
-const { contextBridge } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('desktop', {
-    getPlatform: () => process.platform,
+    getSystemInfo: () => ipcRenderer.invoke('system:get-info'),
 });

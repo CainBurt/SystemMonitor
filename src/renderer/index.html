@@ -6,18 +6,26 @@
     <title>System Monitor</title>
 </head>
 <body>
-    <h1>System Monitor </h1>
-    <p>Renderer process is running.</p>
+  <h1>System Monitor</h1>
 
-    <p>
-        Platform:
-        <span id="platform">Loading...</span>
-    </p>
+  <p>Platform: <span id="platform">Loading...</span></p>
+  <p>Architecture: <span id="architecture">Loading...</span></p>
+  <p>CPU cores: <span id="cpu-count">Loading...</span></p>
+  <p>Total memory: <span id="total-memory">Loading...</span></p>
+  <p>Free memory: <span id="free-memory">Loading...</span></p>
 
-    <script>
-        const platformElement = document.getElementById('platform');
+  <script>
+    async function loadSystemInfo() {
+      const info = await window.desktop.getSystemInfo();
 
-        platformElement.textContent = window.desktop.getPlatform();
-    </script>
+      document.getElementById('platform').textContent = info.platform;
+      document.getElementById('architecture').textContent = info.architecture;
+      document.getElementById('cpu-count').textContent = info.cpuCount;
+      document.getElementById('total-memory').textContent = info.totalMemory;
+      document.getElementById('free-memory').textContent = info.freeMemory;
+    }
+
+    loadSystemInfo();
+  </script>
 </body>
 </html>

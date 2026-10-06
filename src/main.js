@@ -1,5 +1,16 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const os = require('os');
+
+ipcMain.handle('system:get-info', () => {
+  return {
+    platform: process.platform,
+    architecture: os.arch(),
+    cpuCount: os.cpus().length,
+    totalMemory: os.totalmem(),
+    freeMemory: os.freemem(),
+  };
+});
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
