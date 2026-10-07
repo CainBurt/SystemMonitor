@@ -6,6 +6,9 @@ async function loadSystemInfo() {
     document.getElementById('cpu-count').textContent = info.cpuCount;
     document.getElementById('total-memory').textContent = info.totalMemory;
     document.getElementById('free-memory').textContent = info.freeMemory;
+    document.getElementById('hostname').textContent = info.hostname;
+    document.getElementById('os-release').textContent = info.release;
+    document.getElementById('os-version').textContent = info.version;
 }
 
 async function loadProcessInfo() {
