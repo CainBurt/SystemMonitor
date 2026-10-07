@@ -23,15 +23,21 @@ function createWindow() {
 }
 
 function getSystemInfo() {
+  const cpus = os.cpus();
   return {
-    platform: process.platform,
-    architecture: os.arch(),
-    cpuCount: os.cpus().length,
-    totalMemory: os.totalmem(),
-    freeMemory: os.freemem(),
-    release: os.release(),
     hostname: os.hostname(),
-    version: os.version(),
+    platform: os.platform(),
+    osType: os.type(),
+    osVersion: typeof os.version === 'function' ? os.version() : '',
+    osRelease: os.release(),
+    arch: os.arch(),
+    username: os.userInfo().username,
+    cpuModel: cpus[0] ? cpus[0].model.trim() : 'Unknown',
+    cpuCores: cpus.length,
+    totalMemory: os.totalmem(),
+    electron: process.versions.electron,
+    chrome: process.versions.chrome,
+    node: process.versions.node,
   };
 }
 

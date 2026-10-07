@@ -1,14 +1,23 @@
-async function loadSystemInfo() {
-    const info = await window.desktop.getSystemInfo();
-
-    document.getElementById('platform').textContent = info.platform;
-    document.getElementById('architecture').textContent = info.architecture;
-    document.getElementById('cpu-count').textContent = info.cpuCount;
-    document.getElementById('total-memory').textContent = info.totalMemory;
-    document.getElementById('free-memory').textContent = info.freeMemory;
-    document.getElementById('hostname').textContent = info.hostname;
-    document.getElementById('os-release').textContent = info.release;
-    document.getElementById('os-version').textContent = info.version;
+function loadSystemInfo(info) {
+  const rows = [
+    ['Computer', info.hostname],
+    ['User', info.username],
+    ['OS', `${info.osType} ${info.osRelease}`],
+    ['Version', info.osVersion],
+    ['Architecture', info.arch],
+    ['CPU', `${info.cpuModel} (${info.cpuCores} logical cores)`],
+    ['Total memory', info.totalMemory],
+    ['Electron / Node', `${info.electron} / ${info.node}`],
+  ];
+  const list = document.getElementById('system-list');
+  list.replaceChildren();
+  for (const [label, value] of rows) {
+    const parent = document.createElement('div');
+    parent.textContent = label;
+    const child = document.createElement('div');
+    child.textContent = value || '–';
+    list.append(parent, child);
+  }
 }
 
 async function loadProcessInfo() {
@@ -38,7 +47,7 @@ async function loadProcessInfo() {
 
 async function init() {
   try {
-    await loadSystemInfo();
+    loadSystemInfo(await window.desktop.getSystemInfo());
     await loadProcessInfo();
   } catch (error) {
     console.error('Failed to initialize diagnostics:', error);

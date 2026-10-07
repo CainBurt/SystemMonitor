@@ -1,0 +1,167 @@
+:root {
+    --bg: #0f1419;
+    --panel: #171d25;
+    --border: #243040;
+    --text: #e6edf3;
+    --muted: #8b98a8;
+    --accent: #4cc2ff;
+    --warn: #ffb454;
+    --danger: #ff6b6b;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.4 "Segoe UI", system-ui, sans-serif;
+}
+
+header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 16px 24px 0;
+}
+
+h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+h2 {
+    margin: 0 0 10px;
+    font-size: 13px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding: 16px 24px 24px;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.wide {
+    grid-column: 1 / -1;
+}
+
+.gauges {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.big {
+    font-size: 34px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.bar {
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.fill {
+    height: 100%;
+    width: 0;
+    background: var(--accent);
+    transition: width .4s, background .4s;
+}
+
+.fill.warn {
+    background: var(--warn);
+}
+
+.fill.danger {
+    background: var(--danger);
+}
+
+canvas {
+    width: 100%;
+    height: 80px;
+    display: block;
+}
+
+#system-list {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 16px;
+    margin: 0;
+}
+
+#system-list div:nth-child(2n - 1) {
+    margin: 0;
+    word-break: break-word;
+    color: var(--muted);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 6px 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.error {
+    position: fixed;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    background: #3a1a1a;
+    border: 1px solid var(--danger);
+    color: #ffd0d0;
+    padding: 10px 14px;
+    border-radius: 8px;
+}
+
+@media (max-width: 820px) {
+
+    main,
+    .gauges {
+        grid-template-columns: 1fr;
+    }
+}
