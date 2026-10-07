@@ -65,6 +65,40 @@ function getProcessInfo() {
   };
 }
 
+let lastCpuSample = sampleCpu();
+
+function sampleCpu() {
+  let idle = 0;
+  let total = 0;
+  for (const cpu of os.cpus()) {
+    for (const value of Object.values(cpu.times)) total += value;
+    idle += cpu.times.idle;
+  }
+  return { idle, total };
+}
+
+function getCpuUsagePercent() {
+  const current = sampleCpu();
+  const idleDelta = current.idle - lastCpuSample.idle;
+  const totalDelta = current.total - lastCpuSample.total;
+  lastCpuSample = current;
+  if (totalDelta <= 0) return 0;
+  return Math.round((1 - idleDelta / totalDelta) * 1000) / 10;
+}
+
+function getLiveStats() {
+  const total = os.totalmem();
+  const free = os.freemem();
+  return {
+    cpuPercent: getCpuUsagePercent(),
+    memTotal: total,
+    memFree: free,
+    memUsed: total - free,
+    uptimeSeconds: os.uptime(),
+    timestamp: Date.now(),
+  };
+}
+
 function isTrustedSender(event) {
   try {
     const url = new URL(event.senderFrame.url);
@@ -85,6 +119,7 @@ function handle(channel, fn) {
 
 handle('system:get-info', () => getSystemInfo());
 handle('process:get-info', () => getProcessInfo());
+handle('live:get-info', () => getLiveStats());
 
 app.whenReady().then(() => {
   createWindow();
