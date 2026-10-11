@@ -1,3 +1,5 @@
+'use strict';
+
 const api = window.desktop;
 const cpuHistory = [];
 
